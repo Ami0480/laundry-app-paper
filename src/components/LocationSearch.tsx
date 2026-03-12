@@ -5,14 +5,23 @@ interface Props {
   onSearch: (city: string) => void;
   onGeolocate: () => void;
   loading: boolean;
+  homeCity: string | null;
 }
 
-export function LocationSearch({ onSearch, onGeolocate, loading }: Props) {
+export function LocationSearch({ onSearch, onGeolocate, loading, homeCity }: Props) {
   const [input, setInput] = useState('');
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (input.trim()) onSearch(input.trim());
+  }
+
+  function handlePin() {
+    if (homeCity) {
+      onSearch(homeCity);
+    } else {
+      onGeolocate();
+    }
   }
 
   return (
@@ -41,11 +50,14 @@ export function LocationSearch({ onSearch, onGeolocate, loading }: Props) {
       </button>
       <button
         type="button"
-        onClick={onGeolocate}
+        onClick={handlePin}
         disabled={loading}
-        title="Use my location"
-        className="p-2 text-ink-muted hover:text-ink border border-paper-200
-          rounded-xl bg-paper-50 hover:bg-paper-100 transition-colors disabled:opacity-40"
+        title={homeCity ? `Go to home: ${homeCity}` : 'Use my location'}
+        className={`p-2 border rounded-xl transition-colors disabled:opacity-40
+          ${homeCity
+            ? 'text-green-600 border-green-200 bg-green-50 hover:bg-green-100'
+            : 'text-ink-muted hover:text-ink border-paper-200 bg-paper-50 hover:bg-paper-100'
+          }`}
       >
         <MapPin size={16} />
       </button>
