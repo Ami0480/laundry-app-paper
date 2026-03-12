@@ -89,6 +89,7 @@ export default function App() {
             onSearch={loadByCity}
             onGeolocate={loadByGeo}
             loading={loading}
+            homeCity={localStorage.getItem('home_city')}
           />
         </div>
       </header>
@@ -134,7 +135,7 @@ export default function App() {
         )}
 
         <footer className="text-center text-xs text-ink-light pt-4 pb-8">
-          Powered by OpenWeatherMap · Logs saved with Supabase
+          Powered by OpenWeatherMap · Logs saved locally
         </footer>
       </main>
     </div>

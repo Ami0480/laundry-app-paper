@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { BookmarkPlus, Check, Loader } from 'lucide-react';
 import type { WeatherCurrent } from '../types/weather';
 import type { DryingResult } from '../types/weather';
-import { saveDryingLog } from '../lib/supabase';
+import { saveDryingLog } from '../lib/storage';
 
 interface Props {
   weather: WeatherCurrent;
@@ -19,7 +19,7 @@ export function SaveLogPanel({ weather, drying }: Props) {
     setStatus('saving');
     setError('');
     try {
-      await saveDryingLog({
+      saveDryingLog({
         city:       weather.city,
         score:      drying.score,
         temp:       weather.temp,
